@@ -62,15 +62,34 @@ class JPEGEncoder:
 
     return encoded_content, err
 
+class JPGEncoder:
+
+  def encode(self, file: str) -> tuple[Optional[str], Optional[Exception]]:
+    err = None
+    encoded_content = None
+
+    try:
+      with open(file, 'rb') as jpg_file:
+        jpg_content = jpg_file.read()
+
+      encoded_content = base64.b64encode(jpg_content).decode(
+        'UTF-8'
+      ) # return a string representation of the base64 encoded bytes
+    except Exception as E:
+      err = E
+
+    return encoded_content, err
+
+
 if __name__ == "__main__":
   jpeg_encoder = JPEGEncoder()
 
-  encoded, err = jpeg_encoder.encode("asset/images/classroom.jpeg")
+  encoded, err = jpeg_encoder.encode("asset/images/classroom.jpg")
   if err:
     print(f'An error has occured {err}')
 
   if encoded:
-    with open("asset/images/classroom_encoded.jpeg", 'w') as out:
+    with open("asset/images/classroom_encoded.jpg", 'w') as out:
       out.write(encoded)
 
   mp3_encoder = MP3Encoder()

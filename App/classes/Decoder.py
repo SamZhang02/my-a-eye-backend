@@ -51,6 +51,21 @@ class JPEGDecoder(Decoder):
     except Exception as e:
       return None, e
 
+class JPGDecoder(Decoder):
+
+  def decode(self, base64_string: str,
+             file_path: str) -> tuple[None, Optional[Exception]]:
+    try:
+      jpg_data = base64.b64decode(base64_string)
+
+      with open(file_path, 'wb') as jpg_file:
+        jpg_file.write(jpg_data)
+
+      return None, None
+    except Exception as e:
+      return None, e
+
+
 if __name__ == "__main__":
   with open('asset/voice/sample_encoded.mp3', 'r') as fobj:
     base64_string_of_mp3 = fobj.read()
@@ -60,12 +75,12 @@ if __name__ == "__main__":
   if error:
     print(f'An error occurred: {error}')
 
-  with open('asset/images/classroom_encoded.jpeg', 'r') as fobj:
-    base64_string_of_jpeg = fobj.read()
+  with open('asset/images/classroom_encoded.jpg', 'r') as fobj:
+    base64_string_of_jpg = fobj.read()
 
   jpeg_decoder = JPEGDecoder()
   _, error = jpeg_decoder.decode(
-    base64_string_of_jpeg, 'asset/images/classroom_decoded.jpeg'
+    base64_string_of_jpg, 'asset/images/classroom_decoded.jpg'
   )
   if error:
     print(f'An error occurred: {error}')

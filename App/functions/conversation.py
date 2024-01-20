@@ -8,10 +8,14 @@ def get_conversation_response(
     err = None
     res = None
 
+    # speech 2 text 
+  
+    user_message_text = ''
+
     try:
         assistant = Assistant()
     except Exception as e:
         err = e
         return res, err
     
-    return assistant.respond(image_b64, user_message, prior_conversation=prior_conversation)
+    return assistant.respond(image_b64, user_message_text, prior_conversation=prior_conversation)
