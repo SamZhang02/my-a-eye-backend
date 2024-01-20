@@ -7,7 +7,7 @@ fmt:
   yapf --in-place --recursive **/*.py
 
 run *args:
-  python3 placeholder {{args}}
+  python3 {{args}}
 
 install *pkg:
   pip3 install {{pkg}} 

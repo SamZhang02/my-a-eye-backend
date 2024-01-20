@@ -1,18 +1,69 @@
-from abc import abstractmethod
+import base64
+from abc import ABC, abstractmethod
 from typing import Optional
 
-class Decoder:
+class Decoder(ABC):
+  
+    @abstractmethod
+    def decode(self, base64_string: str, file_path: str) -> tuple[None, Optional[Exception]]:
+        pass
 
-  @abstractmethod
-  def decode(self, base64: str, file_path: str) -> tuple[None, Optional[Exception]]:
-    ...
 
-class MP3Decoder:
+class MP3Decoder(Decoder):
 
-  def decode(self, base64: str, file_path: str) -> tuple[None, Optional[Exception]]:
-    ...
+    def decode(self, base64_string: str, file_path: str) -> tuple[None, Optional[Exception]]:
+        try:
+            mp3_data = base64.b64decode(base64_string)
+            
+            with open(file_path, 'wb') as mp3_file:
+                mp3_file.write(mp3_data)
+            
+            return None, None  
+        except Exception as e:
+            return None, e  
 
-class PNGDecoder:
 
-  def decode(self, base64: str, file_path: str) -> tuple[None, Optional[Exception]]:
-    ...
+class PNGDecoder(Decoder):
+
+    def decode(self, base64_string: str, file_path: str) -> tuple[None, Optional[Exception]]:
+        try:
+            png_data = base64.b64decode(base64_string)
+            
+            with open(file_path, 'wb') as png_file:
+                png_file.write(png_data)
+            
+            return None, None  
+        except Exception as e:
+            return None, e  
+
+class JPEGDecoder(Decoder):
+
+    def decode(self, base64_string: str, file_path: str) -> tuple[None, Optional[Exception]]:
+        try:
+            jpeg_data = base64.b64decode(base64_string)
+            
+            with open(file_path, 'wb') as jpeg_file:
+                jpeg_file.write(jpeg_data)
+            
+            return None, None  
+        except Exception as e:
+            return None, e  
+
+
+if __name__ == "__main__":
+  with open('asset/voice/sample_encoded.mp3','r') as fobj:
+    base64_string_of_mp3 = fobj.read()
+
+  mp3_decoder = MP3Decoder()
+  _, error = mp3_decoder.decode(base64_string_of_mp3, 'asset/voice/sample_decoded.mp3')
+  if error:
+      print(f'An error occurred: {error}')
+
+ 
+  with open('asset/images/classroom_encoded.jpeg','r') as fobj:
+    base64_string_of_jpeg = fobj.read()
+
+  jpeg_decoder = JPEGDecoder()
+  _, error = jpeg_decoder.decode(base64_string_of_jpeg, 'asset/images/classroom_decoded.jpeg')
+  if error:
+      print(f'An error occurred: {error}')
