@@ -1,22 +1,23 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
+from dotenv import load_dotenv
+import os 
+
+load_dotenv()
 
 UPLOAD_FOLDER = 'recs'
 
-# Initialize the Flask application
 app = Flask(__name__)
 
-# Enable CORS
 CORS(app)
 
-# Define a route for the default URL, which returns a JSON response
 @app.route('/api')
 def default():
   return jsonify({'message': 'Hello, World!'})
 
-# Define a route for the default URL, which returns a JSON response
-@app.route('/api/eye')
+@app.route('/api/eye', methods=['POST'])
 def eye():
+  print(request.json)
   return jsonify({'message': 'You have reached the correct endpoint!'})
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
