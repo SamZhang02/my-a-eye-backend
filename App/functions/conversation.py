@@ -12,7 +12,7 @@ def get_conversation_response(
 
   user_message_text = ''
 
-  # get prior conversation
+  # prior conversation processing
 
   try:
     assistant = Assistant()

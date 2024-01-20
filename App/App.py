@@ -18,25 +18,20 @@ def default():
 
 @app.route('/api/eye', methods=['POST'])
 def respond_conversation():
-  res = None
-  err = None
-
-  body = request.json
-
   try:
-    past_messages = body['pastMessages']
-    current_message = body['currentMessage']
-    images = body['images']
+    past_messages = request.json['pastMessages']
+    current_message = request.json['currentMessage']
+    images = request.json['images']
   except Exception as err:
     print(err)
-    return jsonify({'message': 'Error!', 'error': str(err)}), 401
+    return jsonify({'message': 'Error!', 'error': str(err)}), 400
 
   res, err = get_conversation_response(
-    images, current_message, prior_conversation=pastMessages
+    images, current_message, prior_conversation=past_messages
   )
 
   if err:
-    return jsonify({'message': 'Error!', 'error': str(err)}), 401
+    return jsonify({'message': 'Error!', 'error': str(err)}), 400
 
   return jsonify({'message': res})
 
