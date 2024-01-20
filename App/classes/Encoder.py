@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
   if encoded:
     with open("asset/voice/sample_encoded.mp3", 'w') as out:
-        out.write(encoded)
+      out.write(encoded)
 
 
 
