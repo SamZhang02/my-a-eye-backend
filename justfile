@@ -4,7 +4,7 @@ serve:
   python3 App/App.py
 
 fmt:
-  yapf --in-place --recursive **/*.py
+  yapf --in-place --recursive .
 
 run *args:
   python3 {{args}}

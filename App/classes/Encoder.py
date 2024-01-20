@@ -44,7 +44,6 @@ class PNGEncoder:
 
     return encoded_content, err
 
-
 class JPEGEncoder:
 
   def encode(self, file: str) -> tuple[Optional[str], Optional[Exception]]:
@@ -63,7 +62,6 @@ class JPEGEncoder:
 
     return encoded_content, err
 
-
 if __name__ == "__main__":
   jpeg_encoder = JPEGEncoder()
 
@@ -73,8 +71,7 @@ if __name__ == "__main__":
 
   if encoded:
     with open("asset/images/classroom_encoded.jpeg", 'w') as out:
-        out.write(encoded)
-
+      out.write(encoded)
 
   mp3_encoder = MP3Encoder()
   encoded, err = mp3_encoder.encode("asset/voice/sample.mp3")
@@ -83,8 +80,4 @@ if __name__ == "__main__":
 
   if encoded:
     with open("asset/voice/sample_encoded.mp3", 'w') as out:
-        out.write(encoded)
-
-
-
-
+      out.write(encoded)
