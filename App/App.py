@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
 from functions.conversation import get_conversation_response
-import os 
+import os
 
 load_dotenv()
 
@@ -29,14 +29,14 @@ def respond_conversation():
     images = body['images']
   except Exception as err:
     print(err)
-    return jsonify({'message': 'Error!',
-                    'error': str(err)}), 401
-  
-  res, err = get_conversation_response(images,current_message, prior_conversation=pastMessages)
+    return jsonify({'message': 'Error!', 'error': str(err)}), 401
+
+  res, err = get_conversation_response(
+    images, current_message, prior_conversation=pastMessages
+  )
 
   if err:
-    return jsonify({'message': 'Error!',
-                    'error': str(err)}), 401
+    return jsonify({'message': 'Error!', 'error': str(err)}), 401
 
   return jsonify({'message': res})
 

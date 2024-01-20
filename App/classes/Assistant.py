@@ -56,9 +56,8 @@ class Assistant:
   def __init__(self) -> None:
     self.client = OpenAI()
 
-  def respond(
-    self, image_b64: str, user_message: str, prior_conversation:list
-  ) -> tuple[Optional[str], Optional[Exception]]:
+  def respond(self, image_b64: str, user_message: str,
+              prior_conversation: list) -> tuple[Optional[str], Optional[Exception]]:
     """
     Make an inference with the GPT-4 api with the image, pior converastion and new user message. 
     The image should be an encoded base 64 string.
@@ -131,8 +130,11 @@ if __name__ == "__main__":
       "role":
       "assistant",
       "content": [{
-        "type": "text",
-        "text": "You are in a classroom setting. Directly in front of you, there is a U-shaped arrangement of student desks, with the open part of the "U" facing a teacher's desk and a blackboard. The nearest student desk is about a few feet away. The teacher's desk is centrally positioned in front of the blackboard and is around several feet ahead. On the blackboard, there are various writings and diagrams in chalk. To your right, on the blackboard, there is a bag and some items that appear to be personal belongings. There are no people visible in the room at this moment. Above the blackboard, there's a long fluorescent light fixture providing illumination to the room."
+        "type":
+        "text",
+        "text":
+        "You are in a classroom setting. Directly in front of you, there is a U-shaped arrangement of student desks, with the open part of the "
+        U" facing a teacher's desk and a blackboard. The nearest student desk is about a few feet away. The teacher's desk is centrally positioned in front of the blackboard and is around several feet ahead. On the blackboard, there are various writings and diagrams in chalk. To your right, on the blackboard, there is a bag and some items that appear to be personal belongings. There are no people visible in the room at this moment. Above the blackboard, there's a long fluorescent light fixture providing illumination to the room."
       }]
     }]
   )
@@ -142,7 +144,6 @@ if __name__ == "__main__":
   else:
     print(answer)
 
-
   answer, err = assistant.respond(
     image_base64, "How to compute the fast fourier transform??", []
   )
@@ -151,4 +152,3 @@ if __name__ == "__main__":
     print(f"error occured: {err}")
   else:
     print(answer)
-

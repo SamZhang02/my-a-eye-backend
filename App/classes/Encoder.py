@@ -80,7 +80,6 @@ class JPGEncoder:
 
     return encoded_content, err
 
-
 if __name__ == "__main__":
   jpeg_encoder = JPEGEncoder()
 

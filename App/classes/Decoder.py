@@ -65,7 +65,6 @@ class JPGDecoder(Decoder):
     except Exception as e:
       return None, e
 
-
 if __name__ == "__main__":
   with open('asset/voice/sample_encoded.mp3', 'r') as fobj:
     base64_string_of_mp3 = fobj.read()
