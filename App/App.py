@@ -18,6 +18,7 @@ def default():
 
 @app.route('/api/eye', methods=['POST'])
 def respond_conversation():
+
   try:
     past_messages = request.json['pastMessages']
     current_message = request.json['currentMessage']
