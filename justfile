@@ -13,7 +13,7 @@ install *pkg:
   pip3 install {{pkg}} 
 
 lock:
-  pipreqs .
+  pipreqs . --force
 
 env:
   python3 -m venv venv
