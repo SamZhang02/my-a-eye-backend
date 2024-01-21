@@ -8,17 +8,17 @@ class Encoder:
   def encode(self, file: str) -> tuple[Optional[str], Optional[Exception]]:
     ...
 
-class MP3Encoder:
+class WEBMEncoder(Encoder):
 
   def encode(self, file: str) -> tuple[Optional[str], Optional[Exception]]:
     err = None
     encoded_content = None
 
     try:
-      with open(file, 'rb') as mp3_file:
-        mp3_content = mp3_file.read()
+      with open(file, 'rb') as webm_file:
+        webm_content = webm_file.read()
 
-      encoded_content = base64.b64encode(mp3_content).decode(
+      encoded_content = base64.b64encode(webm_content).decode(
         'UTF-8'
       ) # return a string representation of the base64 encoded bytes
     except Exception as E:
@@ -26,7 +26,7 @@ class MP3Encoder:
 
     return encoded_content, err
 
-class JPGEncoder:
+class JPGEncoder(Encoder):
 
   def encode(self, file: str) -> tuple[Optional[str], Optional[Exception]]:
     err = None
@@ -55,11 +55,14 @@ if __name__ == "__main__":
     with open("asset/images/classroom_encoded.jpg", 'w') as out:
       out.write(encoded)
 
-  mp3_encoder = MP3Encoder()
-  encoded, err = mp3_encoder.encode("asset/voice/sample.mp3")
+  webm_encoder = WEBMEncoder()
+  encoded, err = webm_encoder.encode("asset/voice/sample.webm")
+
   if err:
     print(f'An error has occured {err}')
 
+  print(encoded)
+
   if encoded:
-    with open("asset/voice/sample_encoded.mp3", 'w') as out:
+    with open("asset/voice/sample_encoded.webm", 'w') as out:
       out.write(encoded)

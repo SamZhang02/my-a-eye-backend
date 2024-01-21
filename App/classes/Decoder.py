@@ -9,15 +9,15 @@ class Decoder(ABC):
              file_path: str) -> tuple[None, Optional[Exception]]:
     pass
 
-class MP3Decoder(Decoder):
+class WEBMDecoder(Decoder):
 
   def decode(self, base64_string: str,
              file_path: str) -> tuple[None, Optional[Exception]]:
     try:
-      mp3_data = base64.b64decode(base64_string)
+      webm_data = base64.b64decode(base64_string)
 
-      with open(file_path, 'wb') as mp3_file:
-        mp3_file.write(mp3_data)
+      with open(file_path, 'wb') as webm_file:
+        webm_file.write(webm_data)
 
       return None, None
     except Exception as e:
@@ -66,11 +66,11 @@ class JPGDecoder(Decoder):
       return None, e
 
 if __name__ == "__main__":
-  with open('asset/voice/sample_encoded.mp3', 'r') as fobj:
-    base64_string_of_mp3 = fobj.read()
+  with open('asset/voice/sample_encoded.webm', 'r') as fobj:
+    base64_string_of_webm = fobj.read()
 
-  mp3_decoder = MP3Decoder()
-  _, error = mp3_decoder.decode(base64_string_of_mp3, 'asset/voice/sample_decoded.mp3')
+  webm_decoder = WEBMDecoder()
+  _, error = webm_decoder.decode(base64_string_of_webm, 'asset/voice/sample_decoded.webm')
   if error:
     print(f'An error occurred: {error}')
 

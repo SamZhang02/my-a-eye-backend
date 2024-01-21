@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from dotenv import load_dotenv
-from functions.conversation import get_conversation_response
+from functions.conversation import get_conversation_response, get_transcription
 import os
 
 load_dotenv()
@@ -18,14 +18,11 @@ def default():
 
 @app.route('/api/eye', methods=['POST'])
 def respond_conversation():
+  body = request.json 
 
-  try:
-    past_messages = request.json['pastMessages']
-    current_message = request.json['currentMessage']
-    images = request.json['images']
-  except Exception as err:
-    print(err)
-    return jsonify({'message': 'Error!', 'error': str(err)}), 400
+  past_messages = body.get('pastMessages') # type: ignore
+  current_message = body.get('currentMessage') # type: ignore
+  images = body.get('images') # type: ignore
 
   res, err = get_conversation_response(
     images, current_message, prior_conversation=past_messages
@@ -36,24 +33,18 @@ def respond_conversation():
 
   return jsonify({'message': res})
 
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+@app.route('/s2t', methods=['POST'])
+def speech2text():
+  body = request.json
 
-@app.route('/record', methods=['POST'])
-def record_audio():
-  try:
-    audio = request.files['audio']
-    response_data = {'message': 'Data received successfully', 'audio': audio}
-    # print(response_data)
+  base64_audio = body.get('audio') #type: ignore
 
-    filename = os.path.join(app.config['UPLOAD_FOLDER'], 'recording.wav')
-    audio.save(filename)
+  message, err = get_transcription(base64_audio)
 
-    return response_data['message']
+  if err:
+    return jsonify({'message': 'Error!', 'error': str(err)}), 400
+  
+  return jsonify({'message': message})
 
-  except Exception as e:
-    return jsonify({'error': str(e)}), 400
-
-#
-# Run the app if this file is executed directly
 if __name__ == '__main__':
   app.run(debug=True)
