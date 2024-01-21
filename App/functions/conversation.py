@@ -25,14 +25,13 @@ def get_conversation_response(
   assistant_response, err = assistant.respond(
     image_b64,
     user_message_text, # type:ignore
-    prior_conversation=formatted_conversation 
+    prior_conversation=formatted_conversation
   )
 
   if err:
     return None, err
 
-  return {'user':user_message_text, 'message': assistant_response},None
-
+  return {'user': user_message_text, 'message': assistant_response}, None
 
 def get_transcription(audio_b64) -> tuple[Optional[str], Optional[Exception]]:
   webm_file_path = os.path.join('asset', 'voice', 'voice.webm')

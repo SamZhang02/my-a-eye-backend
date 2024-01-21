@@ -61,8 +61,6 @@ if __name__ == "__main__":
   if err:
     print(f'An error has occured {err}')
 
-  print(encoded)
-
   if encoded:
     with open("asset/voice/sample_encoded.webm", 'w') as out:
       out.write(encoded)

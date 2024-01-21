@@ -18,8 +18,6 @@ def default():
 def respond_conversation():
   body = request.json
 
-  print(f"got body {body}")
-
   past_messages = body.get('pastMessages') # type:ignore
   current_message = body.get('currentMessage').get('text') # type:ignore
   image = body.get('images') # type:ignore
