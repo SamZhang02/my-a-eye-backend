@@ -6,8 +6,6 @@ import os
 
 load_dotenv()
 
-UPLOAD_FOLDER = 'recs'
-
 app = Flask(__name__)
 
 CORS(app)
@@ -18,20 +16,24 @@ def default():
 
 @app.route('/api/eye', methods=['POST'])
 def respond_conversation():
-  body = request.json 
+  body = request.json
 
-  past_messages = body.get('pastMessages') # type: ignore
-  current_message = body.get('currentMessage') # type: ignore
-  images = body.get('images') # type: ignore
+  print(f"got body {body}")
+
+  past_messages = body.get('pastMessages') # type:ignore
+  current_message = body.get('currentMessage').get('text') # type:ignore
+  image = body.get('images') # type:ignore
+
+  print(past_messages)
 
   res, err = get_conversation_response(
-    images, current_message, prior_conversation=past_messages
+    image, current_message, prior_conversation=past_messages
   )
 
   if err:
     return jsonify({'message': 'Error!', 'error': str(err)}), 400
 
-  return jsonify({'message': res})
+  return jsonify(res)
 
 @app.route('/s2t', methods=['POST'])
 def speech2text():
@@ -43,7 +45,7 @@ def speech2text():
 
   if err:
     return jsonify({'message': 'Error!', 'error': str(err)}), 400
-  
+
   return jsonify({'message': message})
 
 if __name__ == '__main__':
